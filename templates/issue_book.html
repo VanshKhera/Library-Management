@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block body %}
+Issue a book
+<br>
+<select>
+    {% for book in books %}
+        <option name="{{ book.title }}">{{ book.title }} by {{ book.author }}</option>
+    {% endfor %}
+  </select>
+{% endblock body %}

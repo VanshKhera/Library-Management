@@ -1,27 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    Books added
-
-    <ul>
-        {% for book in books %}
-            <li>{{ book.title }} by {{ book.author }}</li>
-        {% endfor %}
-    </ul>
-
-    Issue a book
-    <select>
-        {% for book in books %}
-            <option name="{{ book.title }}">{{ book.title }} by {{ book.author }}</option>
-        {% endfor %}
-      </select>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block body %}
+    homepage?
+{% endblock body %}
