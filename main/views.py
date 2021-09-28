@@ -14,6 +14,7 @@ def index(request):
     return render(request, 'index.html', data)
 
 def library(request):
+    data['books'] = Book.objects.all()
     return render(request, 'library.html', data)
 
 def add_book(request):

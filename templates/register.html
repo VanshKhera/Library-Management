@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}
+    Create an account
+{% endblock title %}
+
+{% block body %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button>Register</button>
+    </form>
+{% endblock body %}

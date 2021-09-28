@@ -4,6 +4,8 @@ Books added
 <ul>
     {% for book in books %}
         <li>{{ book.title }} by {{ book.author }}</li>
+        <button>Edit</button>
+        <button>Delete</button>
     {% endfor %}
 </ul>
 {% endblock body %}
