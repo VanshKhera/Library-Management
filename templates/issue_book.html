@@ -1,10 +1,13 @@
 {% extends "layout.html" %}
+{% load crispy_forms_tags %}
 {% block body %}
-Issue a book
-<br>
-<select>
-    {% for book in books %}
-        <option name="{{ book.title }}">{{ book.title }} by {{ book.author }}</option>
-    {% endfor %}
-  </select>
+<h2 class="heading">Issue a book</h2>
+<form method="post" class="content-f">
+    {% csrf_token %}
+    {{ issue_book_form|crispy }}
+    <br>
+    <div class="heading">
+        <button class="btn btn-primary" type="submit">Issue</button>
+    </div>
+</form>
 {% endblock body %}

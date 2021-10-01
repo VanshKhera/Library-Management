@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<div class="mb-3">
+    <label for="disabledTextInput" class="form-label">Title</label>
+    <input type="text" id="disabledTextInput" class="form-control" value="{{ ls.title }}" disabled>
+</div>
+<div class="mb-3">
+    <label for="disabledTextInput" class="form-label">Author</label>
+    <input type="text" id="disabledTextInput" class="form-control" value="{{ ls.author }}" disabled>
+</div>
+{% if ls.description %}
+<div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="4" disabled>{{ ls.description }}</textarea>
+  </div>
+{% else %}
+{% endif %}
+    <br>
+        <button class="btn btn-primary">
+            <a style="text-decoration: none; color: white;" href="/update/{{ ls.id }}">Edit</a>
+        </button>
+        <button class="btn btn-danger">
+            <a href="/delete/{{ ls.id }}" style="text-decoration: none; color: white;">Delete</a>
+        </button>
+{% endblock body %} 

@@ -1,20 +1,54 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <a href="/">Home</a>
-    <a href="/library">My Library</a>
-    <a href="/add-book">Add a Book</a>
-    <a href="/issue-book">Issue a Book</a>
-    <hr>
-    {% block body %}
-      
-    {% endblock body %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="">Library Management</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/library">My Library</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/add-book">Add a book</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/issue-book">Issue a Book</a>
+              </li>
+              </ul>
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/accounts/register">
+                    <button class="btn">Sign Up</button>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page"><button class="btn btn-primary">Sign In</button></a>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </nav>
+    <div class="content">
+        {% block body %}{% endblock body %}
+    </div>
 </body>
 </html>

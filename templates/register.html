@@ -2,11 +2,16 @@
 {% block title %}
     Create an account
 {% endblock title %}
-
+{% load crispy_forms_tags %}
 {% block body %}
+<div class="content-f">
+    <h1 class="heading">Register</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form }}
-        <button>Register</button>
+        {{ form|crispy }}
+        <div class="heading">
+            <button class="btn btn-primary">Register</button>
+        </div>
     </form>
+</div>
 {% endblock body %}
