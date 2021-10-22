@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h4>Are you sure you want to delete "<code>{{ issue }}</code>" ?</h4>
+    <form method="POST">
+        {% csrf_token %}
+        <button class="btn btn-primary">
+            <a href="/books-issued" style="color: white; text-decoration: none;">Cancel</a>
+        </button>
+        <button class="btn btn-danger">Delete</button>
+    </form>
+{% endblock body %} 

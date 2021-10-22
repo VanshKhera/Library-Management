@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h1>Books Issued</h1>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+    {% for issue in issued %}
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="flush-heading{{ forloop.counter }}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-collapse{{ forloop.counter }}">
+              {{ issue }}
+            </button>
+          </h2>
+          <div id="flush-collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                Book: <code>{{ issue.bookName }}</code>
+                <br>
+                Issued By: <code>{{ issue.name }}</code>
+                <br>
+                Class and section: <code>{{ issue.classSection }}</code>
+                <br>
+                Issued On: <code>{{ issue.issued_date }}</code>
+                <br>
+                Due: <code>{{ issue.date }}</code>
+                <hr>
+                <form method="POST">
+                  {% csrf_token %}
+                  <button class="btn btn-primary" name="return_book">Take Back</button>
+                  <button class="btn btn-secondary">
+                    <a href="{% url 'issue_edit' issue.id %}" style="text-decoration: none; color: white;">Edit</a>
+                  </button>
+                  <button class="btn btn-danger">
+                    <a href="{% url 'issue_delete' issue.id %}" style="text-decoration: none; color: white;">Delete</a>
+                  </button>
+                </form>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock body %}

@@ -16,7 +16,7 @@ class IssueBook(models.Model):
     bookName = models.ForeignKey(Book, on_delete=models.CASCADE)
     rollno = models.PositiveIntegerField()
     issued_date = models.DateTimeField(auto_now_add=True)
-    due_date = models.DateTimeField()
+    date = models.DateField()
     
     def __str__(self):
-        return f"{self.name} issued {self.bookName}"
+        return f"{self.bookName} issued by {self.name}"

@@ -20,11 +20,13 @@ from .models import Book, IssueBook
     due_date = forms.DateField(label="Due Date")"""
     
 class BookForm(ModelForm):
+    # description = forms.Textarea(widget=forms.TextInput(attrs={'placeholder': 'Description (optional)',}))
     class Meta:
         model = Book
         fields = ['title', 'author', 'description']
 
 class issueBook(ModelForm):
+    date = forms.DateTimeField(widget=forms.DateInput(attrs={'type':'date'}))
     class Meta:
         model = IssueBook
         fields = '__all__'

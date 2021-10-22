@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block body %}
 <h2 class="heading">Issue a book</h2>
-<form method="post" class="content-f">
+<form method="POST" class="content-f">
     {% csrf_token %}
     {{ issue_book_form|crispy }}
     <br>
