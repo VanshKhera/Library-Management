@@ -53,9 +53,7 @@ def issue_book(request):
 @login_required(login_url='login')
 def book(request, id):
     ls = Book.objects.get(id=id)
-    if ls in request.user.Book.all():        
-        return render(request, 'book.html', {"ls" : ls})
-    return render(request, 'index.html')
+    return render(request, 'book.html', {"ls" : ls})
 @login_required(login_url='login')
 def updateBook(request, id):
     book = Book.objects.get(id=id)
@@ -85,6 +83,12 @@ def deleteBook(request, id):
 
 @login_required(login_url='login')
 def booksIssued(request):
+    if request.method == 'POST':
+        try:    
+            if request.POST.get("take_back"):
+                print(":O")
+        except:
+            print("FAIL LOL")
     issued = IssueBook.objects.all()
     context = { 
         "books" : Book.objects.all().filter(issued=True),
