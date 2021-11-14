@@ -11,5 +11,6 @@ urlpatterns = [
     path("delete/<int:id>", views.deleteBook, name="delete_book"),
     path("books-issued/", views.booksIssued, name="books_issued"),
     path("issue/edit/<int:id>", views.issueEdit, name="issue_edit"),
-    path("issue/delete/<int:id>", views.deleteIssue, name="issue_delete")
+    path("issue/delete/<int:id>", views.deleteIssue, name="issue_delete"),
+    path("retrieve-book/<int:id>", views.retrieveBook, name="retrieve_book")
 ]

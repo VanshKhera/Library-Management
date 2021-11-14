@@ -3,6 +3,7 @@ from .models import Book, IssueBook
 from .forms import BookForm, issueBook
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 # Create your views here.
 global data
@@ -83,15 +84,11 @@ def deleteBook(request, id):
 
 @login_required(login_url='login')
 def booksIssued(request):
-    if request.method == 'POST':
-        try:    
-            if request.POST.get("take_back"):
-                print(":O")
-        except:
-            print("FAIL LOL")
     issued = IssueBook.objects.all()
+    books = Book.objects.all().filter(issued=True)
+
     context = { 
-        "books" : Book.objects.all().filter(issued=True),
+        "books" : books,
         "issued" : issued
     }
     return render(request, 'books_issued.html', context)
@@ -122,3 +119,12 @@ def deleteIssue(request, id):
         "issue" : issue
     }
     return render(request, 'issue_delete.html', context)
+
+def retrieveBook(request, id):
+    issue_current = Book.objects.get(id=id)
+    if request.method == 'POST':
+        issue_current.issued = False
+        issue_current.save()
+        messages.info(request, "Book retrieved successfully!")
+        return redirect("/books-issued")
+    return render(request, 'retreive.html', { 'data' : issue_current })

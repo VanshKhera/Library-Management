@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    {{ data }}
+    <form method="POST">
+        {% csrf_token %}
+        <button class="btn btn-primary">Retrieve</button>
+    </form>
+{% endblock body %}

@@ -24,26 +24,8 @@
                 <form method="POST">
                   {% csrf_token %}
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Retrieve Book
+                    <a href="/retrieve-book/{{ issue.bookName.id }}">Retrieve Book</a>
                   </button>
-                  
-                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Retrieve Book</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                          Are you sure you wanna take back {{ issue.bookName }} from {{ issue.name }}?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No, keep</button>
-                            <button type="button" class="btn btn-primary" value="Yes, take back" name="take_back">Yes, take back</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <button class="btn btn-secondary">
                     <a href="{% url 'issue_edit' issue.id %}" style="text-decoration: none; color: white;">Edit</a>
                   </button>
