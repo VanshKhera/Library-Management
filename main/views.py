@@ -40,8 +40,7 @@ def add_book(request):
 def issue_book(request):
     if request.method == 'POST':
         issueForm = issueBook(request.POST)
-
-        if issueForm.is_valid():         
+        if issueForm.is_valid():
             issued = issueForm.save()   
             current_book = issued.bookName
             current_book.issued = True
@@ -86,6 +85,7 @@ def deleteBook(request, id):
 def booksIssued(request):
     issued = IssueBook.objects.all()
     books = Book.objects.all().filter(issued=True)
+    print(books)
 
     context = { 
         "books" : books,
@@ -121,10 +121,10 @@ def deleteIssue(request, id):
     return render(request, 'issue_delete.html', context)
 
 def retrieveBook(request, id):
-    issue_current = Book.objects.get(id=id)
+    book = Book.objects.get(id=id)
     if request.method == 'POST':
-        issue_current.issued = False
-        issue_current.save()
-        messages.info(request, "Book retrieved successfully!")
-        return redirect("/books-issued")
-    return render(request, 'retreive.html', { 'data' : issue_current })
+        print("done")
+        book.issued = False
+        book.save()
+        return redirect('/books-issued')
+    return render(request, 'retreive.html', { 'data' : book })

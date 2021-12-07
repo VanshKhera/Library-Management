@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
     <h1>Books Issued</h1>
+    {% if books %}
     <div class="accordion accordion-flush" id="accordionFlushExample">
     {% for issue in issued %}
         <div class="accordion-item">
@@ -23,7 +24,7 @@
                 <hr>
                 <form method="POST">
                   {% csrf_token %}
-                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <button type="button" class="btn btn-primary">
                     <a href="/retrieve-book/{{ issue.bookName.id }}">Retrieve Book</a>
                   </button>
                   <button class="btn btn-secondary">
@@ -38,4 +39,8 @@
         </div>
     {% endfor %}
     </div>
+    {% else %}
+    <br>
+    <h5>No Books issued.</h5>
+    {% endif %}
 {% endblock body %}

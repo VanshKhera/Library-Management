@@ -10,4 +10,19 @@
         <button class="btn btn-primary" type="submit">Issue</button>
     </div>
 </form>
+<div id="autocomplete" class="autocomplete">
+    <input class="autocomplete-input" />
+    <ul class="autocomplete-result-list"></ul>
+  </div>
+  <script>
+    new Autocomplete('#autocomplete', {
+    search: input => {
+    if (input.length < 1) { return [] }
+    return countries.filter(country => {
+      return country.toLowerCase()
+        .startsWith(input.toLowerCase())
+    })
+  }
+})    
+  </script>
 {% endblock body %}
