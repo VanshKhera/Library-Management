@@ -13,7 +13,7 @@ class Book(models.Model):
 class IssueBook(models.Model):
     name = models.CharField(max_length=400)
     classSection = models.CharField(max_length=10)
-    bookName = models.ForeignKey(Book, on_delete=models.CASCADE)
+    bookName = models.ForeignKey("Book", on_delete=models.CASCADE)
     rollno = models.PositiveIntegerField()
     issued_date = models.DateTimeField(auto_now_add=True)
     date = models.DateField()

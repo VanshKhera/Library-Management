@@ -25,7 +25,7 @@
                 <form method="POST">
                   {% csrf_token %}
                   <button type="button" class="btn btn-primary">
-                    <a href="/retrieve-book/{{ issue.bookName.id }}">Retrieve Book</a>
+                    <a href="/retrieve-book/{{ issue.bookName.id }}" style="text-decoration: none; color: white;">Retrieve Book</a>
                   </button>
                   <button class="btn btn-secondary">
                     <a href="{% url 'issue_edit' issue.id %}" style="text-decoration: none; color: white;">Edit</a>

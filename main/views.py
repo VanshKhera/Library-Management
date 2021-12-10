@@ -85,7 +85,6 @@ def deleteBook(request, id):
 def booksIssued(request):
     issued = IssueBook.objects.all()
     books = Book.objects.all().filter(issued=True)
-    print(books)
 
     context = { 
         "books" : books,
@@ -123,8 +122,6 @@ def deleteIssue(request, id):
 def retrieveBook(request, id):
     book = Book.objects.get(id=id)
     if request.method == 'POST':
-        print("done")
-        book.issued = False
-        book.save()
+        IssueBook.objects.get(bookName=id).delete()
         return redirect('/books-issued')
     return render(request, 'retreive.html', { 'data' : book })
