@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
     <h1>Books Issued</h1>
-    {% if books %}
+    {% if issued %}
     <div class="accordion accordion-flush" id="accordionFlushExample">
     {% for issue in issued %}
         <div class="accordion-item">

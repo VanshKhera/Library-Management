@@ -4,7 +4,9 @@
     {{ data }}
     <form method="POST">
         {% csrf_token %}
-        <button class="btn btn-secondry">Cancel</button>
-        <button class="btn btn-primary">Retrieve</button>
+        <button type="button" class="btn btn-secondary">
+            <a href="{% url 'books_issued'%}" style="text-decoration: none; color: white;">Cancel</a>
+        </button>
+        <button class="btn btn-primary" name="Confirm">Retrieve</button>
     </form>
 {% endblock body %}
