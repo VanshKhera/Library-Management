@@ -130,7 +130,8 @@ def deleteIssue(request, id):
 def retrieveBook(request, id):
     book = Book.objects.get(id=id)
     if request.method == 'POST':
-        IssueBook.objects.get(bookName=id)
+        a = IssueBook.objects.get(bookName=id)
+        a.issued = False
         messages.info(request, "Book retrieved successfully!")
         return redirect('/books-issued')
     return render(request, 'retreive.html', { 'data' : book })
