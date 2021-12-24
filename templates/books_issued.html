@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
     <h1>Books Issued</h1>
-    {% if issued %}
     <div class="accordion accordion-flush" id="accordionFlushExample">
     {% for issue in issued %}
         <div class="accordion-item">
@@ -12,7 +11,7 @@
           </h2>
           <div id="flush-collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
-                Book: <code>{{ issue.bookName }}</code>
+                Book: <code>{{ issue.book }}</code>
                 <br>
                 Issued By: <code>{{ issue.name }}</code>
                 <br>
@@ -25,7 +24,7 @@
                 <form method="POST">
                   {% csrf_token %}
                   <button type="button" class="btn btn-primary">
-                    <a href="/retrieve-book/{{ issue.bookName.id }}" style="text-decoration: none; color: white;">Retrieve Book</a>
+                    <a href="/retrieve-book/{{ issue.book }}" style="text-decoration: none; color: white;">Retrieve Book</a>
                   </button>
                   <button class="btn btn-secondary">
                     <a href="{% url 'issue_edit' issue.id %}" style="text-decoration: none; color: white;">Edit</a>
@@ -39,8 +38,5 @@
         </div>
     {% endfor %}
     </div>
-    {% else %}
-    <br>
-    <h5>No Books issued.</h5>
-    {% endif %}
+
 {% endblock body %}

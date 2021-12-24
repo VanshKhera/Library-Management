@@ -90,7 +90,7 @@ def deleteBook(request, id):
 @login_required(login_url='login')
 def booksIssued(request):
     issued = IssueBook.objects.all()
-    books = Book.objects.all().filter(issued=True)
+    books = Book.objects.filter(issued=True)
 
     context = { 
         "books" : books,
@@ -130,7 +130,7 @@ def deleteIssue(request, id):
 def retrieveBook(request, id):
     book = Book.objects.get(id=id)
     if request.method == 'POST':
-        a = IssueBook.objects.get(bookName=id)
+        a = IssueBook.objects.get(book=Book.objects.get(pk=id))
         a.issued = False
         messages.info(request, "Book retrieved successfully!")
         return redirect('/books-issued')
