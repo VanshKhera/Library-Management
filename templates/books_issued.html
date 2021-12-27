@@ -1,6 +1,10 @@
 {% extends "layout.html" %}
+
+{% block title %}Books Issued{% endblock %}
+
 {% block body %}
     <h1>Books Issued</h1>
+{% if issued %}
     <div class="accordion accordion-flush" id="accordionFlushExample">
     {% for issue in issued %}
         <div class="accordion-item">
@@ -24,7 +28,7 @@
                 <form method="POST">
                   {% csrf_token %}
                   <button type="button" class="btn btn-primary">
-                    <a href="/retrieve-book/{{ issue.book }}" style="text-decoration: none; color: white;">Retrieve Book</a>
+                    <a href="/retrieve-book/{{ issue.book.id }}" style="text-decoration: none; color: white;">Retrieve Book</a>
                   </button>
                   <button class="btn btn-secondary">
                     <a href="{% url 'issue_edit' issue.id %}" style="text-decoration: none; color: white;">Edit</a>
@@ -38,5 +42,8 @@
         </div>
     {% endfor %}
     </div>
-
+{% else %}
+<br>
+<h5>No Books Issued,<a href="{% url 'issue_book' %}">click here</a> to issue one!</h5>
+{% endif %}
 {% endblock body %}

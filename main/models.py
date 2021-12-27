@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Book(models.Model):
@@ -6,6 +7,7 @@ class Book(models.Model):
     author = models.CharField(max_length=300)
     description = models.TextField(max_length=5000, null=True, blank=True)
     issued = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.title} by {self.author}"
@@ -17,6 +19,7 @@ class IssueBook(models.Model):
     rollno = models.PositiveIntegerField()
     issued_date = models.DateTimeField(auto_now_add=True)
     date = models.DateField()
-    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
     def __str__(self):
-        return f"{self.bookName} issued by {self.name}"
+        return f"{self.book} issued by {self.name}"

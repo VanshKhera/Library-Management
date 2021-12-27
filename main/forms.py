@@ -13,4 +13,4 @@ class issueBook(ModelForm):
     date = forms.DateTimeField(widget=forms.DateInput(attrs={'type':'date'}))
     class Meta:
         model = IssueBook
-        fields = '__all__'
+        fields = ['name', 'classSection', 'book', 'rollno', 'date']

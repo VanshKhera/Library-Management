@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 {% load crispy_forms_tags %}
+
+{% block title %}Issue a Book{% endblock %}
+
 {% block body %}
 <h2 class="heading">Issue a book</h2>
 <form method="POST" class="content-f">
@@ -10,7 +13,7 @@
         <button class="btn btn-primary" type="submit">Issue</button>
     </div>
 </form>
-<div id="autocomplete" class="autocomplete">
+<!-- <div id="autocomplete" class="autocomplete">
     <input class="autocomplete-input" />
     <ul class="autocomplete-result-list"></ul>
   </div>
@@ -23,6 +26,6 @@
         .startsWith(input.toLowerCase())
     })
   }
-})    
+})     -->
   </script>
 {% endblock body %}

@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% block title %}Delete a Book{% endblock %}
+
 {% block body %}
     <h4>Are your sure you want to delete "<a href="/book/{{ book.id }}">{{ book.title }} by {{ book.author }}</a>"?</h4>
     <form method="POST">
