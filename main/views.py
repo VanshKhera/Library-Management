@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from .models import Book, IssueBook
 from .forms import BookForm, issueBook
@@ -17,7 +18,7 @@ def index(request):
 
 @login_required(login_url='login')
 def library(request):
-    data['books'] = Book.objects.all()
+    data['books'] = Book.objects.filter(user=request.user)
     return render(request, 'library.html', data)
 
 @login_required(login_url='login')
@@ -29,7 +30,7 @@ def add_book(request):
             t = form.cleaned_data["title"]
             a = form.cleaned_data["author"]
             d = form.cleaned_data["description"]
-            m = Book(title=t, author=a, description=d)
+            m = Book(title=t, author=a, description=d, user=request.user)
             m.save()
             return HttpResponseRedirect("/book/%d" % m.id)
         else:
@@ -41,19 +42,20 @@ def issue_book(request):
     if request.method == 'POST':
         issueForm = issueBook(request.POST)
         if issueForm.is_valid():
+            issueForm.user=request.user
             issued = issueForm.save()
-            
-            if issued.bookName.issued == True:
+
+            if issued.book.issued == True:
                 issued.delete()
                 messages.warning(request, "Book already issued to someone, retrieve it to issue it to someone else again.")
 
             else:
-                current_book = issued.bookName
+                current_book = issued.book
                 current_book.issued = True
                 current_book.save()
                 return redirect('/books-issued')
     else:
-        issueForm = issueBook()
+        issueForm = issueBook()          
     return render(request, 'issue_book.html', data)
 
 @login_required(login_url='login')
@@ -80,7 +82,7 @@ def updateBook(request, id):
 def deleteBook(request, id):
     book = Book.objects.get(id=id)
     if request.method == 'POST':
-        book.delete()        
+        book.delete()
         return redirect('/library')
     context = {
         "book" : Book.objects.get(id=id)
@@ -90,7 +92,7 @@ def deleteBook(request, id):
 @login_required(login_url='login')
 def booksIssued(request):
     issued = IssueBook.objects.all()
-    books = Book.objects.filter(issued=True)
+    books = Book.objects.filter(issued=True) # user=request.user
 
     context = { 
         "books" : books,
@@ -115,10 +117,11 @@ def issueEdit(request, id):
     }
     return render(request, 'issue_update.html', context) 
 
+@login_required(login_url='login')
 def deleteIssue(request, id):
     issue = IssueBook.objects.get(id=id)
     if request.method == 'POST':
-        issue.bookName.issued = False
+        issue.book.issued = False
         issue.save()
         issue.delete()
         return redirect("/books-issued/")
@@ -127,11 +130,14 @@ def deleteIssue(request, id):
     }
     return render(request, 'issue_delete.html', context)
 
+@login_required(login_url='login')
 def retrieveBook(request, id):
     book = Book.objects.get(id=id)
     if request.method == 'POST':
         a = IssueBook.objects.get(book=Book.objects.get(pk=id))
-        a.issued = False
+        a.book.issued = False
+        a.book.save()
+        a.delete()
         messages.info(request, "Book retrieved successfully!")
         return redirect('/books-issued')
     return render(request, 'retreive.html', { 'data' : book })
