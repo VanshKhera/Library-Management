@@ -40,7 +40,7 @@ def add_book(request):
 @login_required(login_url='login')
 def issue_book(request):
     if request.method == 'POST':
-        issueForm = issueBook(request.POST)
+        issueForm = issueBook(request.POST, usr = request.user)
         if issueForm.is_valid():
             issueForm.user = request.user
             print(request.user)
@@ -57,8 +57,8 @@ def issue_book(request):
                 current_book.save()
                 return redirect('/books-issued')
     else: 
-        issueForm = issueBook()          
-    return render(request, 'issue_book.html', data)
+        issueForm = issueBook(usr = request.user)          
+    return render(request, 'issue_book.html', {'issue_book_form': issueBook(usr = request.user)})
     
 @login_required(login_url='login')
 def book(request, id):

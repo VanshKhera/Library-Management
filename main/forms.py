@@ -10,7 +10,13 @@ class BookForm(ModelForm):
         fields = ['title', 'author', 'description']
 
 class issueBook(ModelForm):
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('usr')
+        super(ModelForm, self).__init__(*args, **kwargs)
+        self.fields['book'] = forms.ModelChoiceField(queryset=Book.objects.filter(user = user))
+
     date = forms.DateTimeField(widget=forms.DateInput(attrs={'type':'date'}))
+
     class Meta:
         model = IssueBook
         fields = ['name', 'classSection', 'book', 'rollno', 'date'] 
