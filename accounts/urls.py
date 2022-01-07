@@ -1,3 +1,4 @@
+from abc import abstractstaticmethod
 from django.urls import path
 from . import views
 

@@ -42,7 +42,8 @@ def issue_book(request):
     if request.method == 'POST':
         issueForm = issueBook(request.POST)
         if issueForm.is_valid():
-            issueForm.user=request.user
+            issueForm.user = request.user
+            print(request.user)
             issued = issueForm.save()
 
             if issued.book.issued == True:
@@ -51,16 +52,18 @@ def issue_book(request):
 
             else:
                 current_book = issued.book
+                print(current_book)
                 current_book.issued = True
                 current_book.save()
                 return redirect('/books-issued')
-    else:
+    else: 
         issueForm = issueBook()          
     return render(request, 'issue_book.html', data)
-
+    
 @login_required(login_url='login')
 def book(request, id):
     ls = Book.objects.get(id=id)
+
     return render(request, 'book.html', {"ls" : ls})
 @login_required(login_url='login')
 def updateBook(request, id):

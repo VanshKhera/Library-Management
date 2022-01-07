@@ -7,19 +7,24 @@ class Book(models.Model):
     author = models.CharField(max_length=300)
     description = models.TextField(max_length=5000, null=True, blank=True)
     issued = models.BooleanField(default=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f"{self.title} by {self.author}"
     
 class IssueBook(models.Model):
+    
+    def pp(self):
+        return self.user.pk
+
     name = models.CharField(max_length=400)
     classSection = models.CharField(max_length=10)
-    book = models.ForeignKey("Book", on_delete=models.CASCADE)
     rollno = models.PositiveIntegerField()
     issued_date = models.DateTimeField(auto_now_add=True)
     date = models.DateField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    # , limit_choices_to={'user' : pp()}
 
     def __str__(self):
         return f"{self.book} issued by {self.name}"
