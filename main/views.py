@@ -7,43 +7,41 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 # Create your views here.
-global data
-data = {
-    "issue_book_form" : issueBook,
-    "form" : BookForm(),
-    "books" : Book.objects.all(),
-}
+@login_required(login_url='login')
 def index(request):
-    return render(request, 'index.html', data)
+    upcoming_dues = IssueBook.objects.all().filter(user=request.user).order_by('date')
+    recent_books = Book.objects.all().filter(user=request.user).order_by('creation_date')
+
+    d = {
+        'dues' : upcoming_dues,
+        'books' : recent_books
+    }
+    return render(request, 'index.html', d)
 
 @login_required(login_url='login')
 def library(request):
-    data['books'] = Book.objects.filter(user=request.user)
-    return render(request, 'library.html', data)
+    return render(request, 'library.html', {'books' : Book.objects.filter(user=request.user)})
 
 @login_required(login_url='login')
 def add_book(request):
     if request.method == "POST":
         form = BookForm(request.POST)
-        
+
         if form.is_valid():
-            t = form.cleaned_data["title"]
-            a = form.cleaned_data["author"]
-            d = form.cleaned_data["description"]
-            m = Book(title=t, author=a, description=d, user=request.user)
-            m.save()
-            return HttpResponseRedirect("/book/%d" % m.id)
-        else:
+            a = form.save()
+            a.user = request.user
+            a.save()
+            return HttpResponseRedirect("/book/%d" % a.id)
+        else:  
             form = BookForm()
-    return render(request, 'add_book.html', data)
+    return render(request, 'add_book.html', {"form" : BookForm()})
 
 @login_required(login_url='login')
 def issue_book(request):
     if request.method == 'POST':
-        issueForm = issueBook(request.POST, usr = request.user)
+        issueForm = issueBook(request.POST, usr=request.user)
         if issueForm.is_valid():
             issueForm.user = request.user
-            print(request.user)
             issued = issueForm.save()
 
             if issued.book.issued == True:
@@ -62,8 +60,7 @@ def issue_book(request):
     
 @login_required(login_url='login')
 def book(request, id):
-    ls = Book.objects.get(id=id)
-
+    ls = Book.objects.get(id=id, user=request.user)
     return render(request, 'book.html', {"ls" : ls})
 @login_required(login_url='login')
 def updateBook(request, id):
@@ -94,9 +91,9 @@ def deleteBook(request, id):
 
 @login_required(login_url='login')
 def booksIssued(request):
-    issued = IssueBook.objects.all()
-    books = Book.objects.filter(issued=True) # user=request.user
-
+    issued = IssueBook.objects.filter(user=request.user)
+    books = Book.objects.filter(issued=True, user=request.user)
+    print(issued, books)
     context = { 
         "books" : books,
         "issued" : issued
@@ -106,7 +103,7 @@ def booksIssued(request):
 @login_required(login_url='login')
 def issueEdit(request, id):
     current_data = IssueBook.objects.get(id=id)
-    form = issueBook(instance=current_data)
+    form = issueBook(instance=current_data, usr=request.user)
     
     if request.method == "POST":
         if request.POST.get('return_book'):
@@ -122,16 +119,13 @@ def issueEdit(request, id):
 
 @login_required(login_url='login')
 def deleteIssue(request, id):
-    issue = IssueBook.objects.get(id=id)
     if request.method == 'POST':
+        issue = IssueBook.objects.get(book=Book.objects.get(pk=id))
         issue.book.issued = False
-        issue.save()
+        issue.book.save()
         issue.delete()
         return redirect("/books-issued/")
-    context = {
-        "issue" : issue
-    }
-    return render(request, 'issue_delete.html', context)
+    return render(request, 'issue_delete.html')
 
 @login_required(login_url='login')
 def retrieveBook(request, id):

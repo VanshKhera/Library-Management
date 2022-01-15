@@ -3,5 +3,17 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
+    <h3>Upcoming Dues</h3>
+    <ul>
+        {% for due in dues %}
+            <li>{{ due }}</li>
+        {% endfor %}
+    </ul>
     
+    <h3>Recently added Books</h3>
+    <ul>    
+        {% for book in books %}
+            <li>{{ book }}</li>
+        {% endfor %}
+    </ul>
 {% endblock body %}

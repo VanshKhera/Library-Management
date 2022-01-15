@@ -34,7 +34,7 @@
                     <a href="{% url 'issue_edit' issue.id %}" style="text-decoration: none; color: white;">Edit</a>
                   </button>
                   <button class="btn btn-danger">
-                    <a href="{% url 'issue_delete' issue.id %}" style="text-decoration: none; color: white;">Delete</a>
+                    <a href="{% url 'issue_delete' issue.book.id %}" style="text-decoration: none; color: white;">Delete</a>
                   </button>
                 </form>
             </div>

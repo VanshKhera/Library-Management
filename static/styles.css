@@ -11,6 +11,11 @@
 .error{
     color: red;
 }
+.link{
+    text-decoration: none;
+    color: white;
+}
+
 @media screen and (max-width:1102px){
     .content-f{
         width: 70%;
