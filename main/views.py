@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.shortcuts import redirect, render
 from .models import Book, IssueBook
 from .forms import BookForm, issueBook
@@ -6,7 +6,8 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-# Create your views here.
+User = settings.AUTH_USER_MODEL
+
 @login_required(login_url='login')
 def index(request):
     upcoming_dues = IssueBook.objects.all().filter(user=request.user).order_by('date')

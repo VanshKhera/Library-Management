@@ -2,10 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class user(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    profile_picture = models.ImageField(upload_to='static/Profile_pics', null=True, default="static/default.jpg")
-
 class Book(models.Model):
     title = models.CharField(max_length=350)
     author = models.CharField(max_length=300)
