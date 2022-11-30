@@ -2,7 +2,8 @@
 {% block title %}Retrieve Book{% endblock %}
 
 {% block body %}
-    {{ data }}
+    Are you sure you want to retrieve <a style="text-decoration: none; color: #D63384" href="/book/{{ id }}"><code>{{ data }}</code>?</a>
+    <hr>
     <form method="POST">
         {% csrf_token %}
         <button type="button" class="btn btn-secondary">

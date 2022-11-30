@@ -42,7 +42,7 @@ def issue_book(request):
     if request.method == 'POST':
         issueForm = issueBook(request.POST)
         if issueForm.is_valid():
-            issueForm.user=request.user
+            issueForm.user = request.user
             issued = issueForm.save()
 
             if issued.book.issued == True:
@@ -140,4 +140,4 @@ def retrieveBook(request, id):
         a.delete()
         messages.info(request, "Book retrieved successfully!")
         return redirect('/books-issued')
-    return render(request, 'retreive.html', { 'data' : book })
+    return render(request, 'retreive.html', { 'data' : book, 'id' : id})
